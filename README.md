@@ -118,8 +118,8 @@ Based on phishing probability:
 | Probability | Risk Level | Color  |
 | ----------- | ---------- | ------ |
 | ≥ 0.70      | Phishing   | Red    |
-| 0.40 – 0.70 | Suspicious | Yellow |
-| < 0.40      | Safe       | Green  |
+| 0.50 – 0.70 | Suspicious | Yellow |
+| < 0.50      | Safe       | Green  |
 
 The extension displays:
 
@@ -279,38 +279,45 @@ timestamp
 ```
 PhishGuard
 │
-├── backend
+├── Backend
 │   ├── app.py
 │   ├── ensemble.py
 │   ├── email_preprocessing.py
-│   ├── models
-│   │   ├── logistic_model.pkl
-│   │   ├── random_forest_model.pkl
-│   │   ├── tfidf_vectorizer.pkl
-│   │   ├── lstm_phishing_model.keras
-│   │   └── bilstm_attn_model.h5
+│   ├── database.py
 │
-├── extension
+├── Extension (Frontend)
+│   ├── background.js
 │   ├── manifest.json
 │   ├── content.js
+│   ├── onboarding.html
+│   ├── onboarding.css
+│   ├── onboarding.js
+│   ├── settings.html
+│   ├── settings.css
+│   ├── settings.js
+│   ├── popup.css
 │   ├── popup.html
 │   └── popup.js
 │
-├── dataset
-│   └── emails.csv
+├── Models
+│   ├── logistic_model.pkl
+│   ├── random_forest_model.pkl
+│   ├── tfidf_vectorizer.pkl
+│   ├── lstm_phishing_model.keras
+│   └── bilstm_attn_model.h5
 │
 └── README.md
 ```
 
 ---
 
-## Installation
+## Installation Guide
 
 ### 1. Clone Repository
 
 ```
-git clone https://github.com/your-repo/phishguard.git
-cd phishguard
+git clone https://github.com/your-repo/PhishGuard.git
+cd PhishGuard
 ```
 
 ### 2. Create Virtual Environment
@@ -332,8 +339,25 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
----
+### 4. Setting up .env file
+The backend requires the following environment variables.
 
+File location:
+backend/.env
+
+Contents:
+```
+HF_TOKEN=your_huggingface_api_token
+BERT_API_URL=https://router.huggingface.co/hf-inference/models/cybersectony/phishing-email-detection-distilbert_v2.4.1
+MONGO_URL=mongodb+srv://username:password@phishguard.afti2df.mongodb.net/phishing_db?retryWrites=true&w=majority
+```
+
+These variables configure:
+- HuggingFace inference access
+- DistilBERT inference endpoint
+- MongoDB database connection
+
+---
 ## Running the Backend
 
 ```
@@ -405,4 +429,10 @@ This project is released for academic and research purposes.
 
 ## Authors
 
+- **Savio David** - Models, Database and Backend
+- **Aaron Coutinho** - Frontend and Extension
+- **Deyon Tomy** - Data Acquisition and Dataset Generation
+- **Ayush Makade** - Documentation
+
 Developed as part of an academic research project on phishing detection using ensemble machine learning techniques.
+
